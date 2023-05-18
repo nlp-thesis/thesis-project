@@ -3,6 +3,3 @@
 *.pdf
 /test
 /spec
-*.pkl
-torch/
-transformers/
