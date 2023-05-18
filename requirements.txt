@@ -7,4 +7,5 @@ pandas==2.0.0
 tqdm==4.65.0
 Flask==2.1.3
 Jinja2>=3.0
+gunicorn==20.1.0
 
