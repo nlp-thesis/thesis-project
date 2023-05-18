@@ -1,7 +1,10 @@
+try:
+    from collections.abc import Mapping
+except ImportError:
+    from collections import Mapping
 import numpy as np
 from flask import Flask, request, render_template
 import pickle
-from collections.abc import Mapping
 from transformers import BertTokenizer
 import torch
 
