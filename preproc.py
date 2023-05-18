@@ -1,9 +1,5 @@
 from get_data import getting_data
 import pandas as pd
-import nltk
-from nltk.tokenize import word_tokenize
-import re
-import openpyxl
 
 positive_words = ["güzel", "eğlenceli", "verimli", "keyifli",
                      "guzel", "eglenceli", "süper", "harika",
@@ -31,9 +27,6 @@ def preprocessing_data():
     data = data.drop_duplicates(ignore_index= True)
     data.Tweet = data.Tweet.astype('str')
     data['Tweet'] = data['Tweet'].apply(lambda x: x.lower())
-    
-    stop_words = nltk.corpus.stopwords.words('turkish')
-    data['Tweet'] = data['Tweet'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop_words)]))
     data['Tweet'] = data['Tweet'].str.replace('@\w+', '', regex=True)
     data['Tweet'] = data['Tweet'].str.replace('rt', '', regex=True)
     data['Tweet'] = data['Tweet'].str.replace('\n', ' ', regex=True)
