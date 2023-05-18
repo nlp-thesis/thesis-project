@@ -131,5 +131,3 @@ def model(lr = 0.01, momentum = 0.9):
         return pickle.dump(model, f)
     
 
-if __name__ == '__main__':
-    model()
