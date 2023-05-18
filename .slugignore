@@ -1,0 +1,8 @@
+# Heres a comment
+*.psd
+*.pdf
+/test
+/spec
+*.pkl
+torch/
+transformers/
