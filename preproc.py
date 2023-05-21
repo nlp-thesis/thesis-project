@@ -27,6 +27,8 @@ def preprocessing_data():
     data = data.drop_duplicates(ignore_index= True)
     data.Tweet = data.Tweet.astype('str')
     data['Tweet'] = data['Tweet'].apply(lambda x: x.lower())
+    
+
     data['Tweet'] = data['Tweet'].str.replace('@\w+', '', regex=True)
     data['Tweet'] = data['Tweet'].str.replace('rt', '', regex=True)
     data['Tweet'] = data['Tweet'].str.replace('\n', ' ', regex=True)

@@ -1,38 +1,31 @@
-try:
-    from collections.abc import Mapping
-except ImportError:
-    from collections import Mapping
-import numpy as np
 from flask import Flask, request, render_template
 import pickle
-from transformers import BertTokenizer
-import torch
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 app = Flask(__name__)
 
 
+with open('model.pkl', 'rb') as f:
+    model = pickle.load(f)
+
+with open('vectorizer.pkl', 'rb') as f:
+    vectorizer = pickle.load(f)
+
+
 @app.route('/')
 def home():
-	return render_template('index.html')
+    return render_template('index.html')
 
-
-model = pickle.load(open("model.pkl", "rb"))
 
 @app.route('/result', methods=['POST'])
 def predict():
     if request.method == 'POST':
-        tokenizer = BertTokenizer.from_pretrained('dbmdz/bert-base-turkish-uncased')
         message = request.form['message']
-        data = [message]
-        encoded_tweet = tokenizer.encode_plus(data, max_length=256, padding='max_length', truncation=True, return_tensors='pt')
-        input_ids = encoded_tweet['input_ids']
-        attention_mask = encoded_tweet['attention_mask']
+        new_tweet_vectorized = vectorizer.transform([message])
+        prediction = model.predict(new_tweet_vectorized)
+        print(f"pred: {prediction}")
+        
+        return render_template('result.html', prediction=prediction)
 
-        with torch.no_grad():
-            outputs = model(input_ids, attention_mask)
-            logits = outputs[0]
-            prediction = torch.argmax(logits).item()
-
-        return render_template('result.html', prediction=prediction)  
 
 
