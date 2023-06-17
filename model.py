@@ -20,8 +20,7 @@ def taken_train_test(col1, col2):
     return  X_train, X_test, y_train, y_test
 
 
-def model_build(C = 100,
-        max_iter = 100):
+def model_build(C = 100, max_iter = 100):
     X_train, X_test, y_train, y_test = taken_train_test(col1 = 'Tweet', col2 = 'Segment')
     model = LinearSVC(C=C, max_iter= max_iter)
     model.fit(X_train, y_train)
